@@ -28,12 +28,21 @@
             margin-left: 20px;
             margin-bottom: 15px;
         }
+        .container-fluid{
+            background-image: url("./assets/images/nature.jpg");
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            height: 1200px;            
+        }
     
     </style>
 </head>
 <body>
-    <div class=".container-fluid">
-    <div class="well">
+    <div class="container-fluid">
+   
 
        
         <h1>Animal Search</h1>
@@ -59,7 +68,7 @@
                 </form>
              </div>
         </div>
-    </div>
+    
 
     </div>
 
@@ -78,40 +87,39 @@
                 url : queryURL,
                 method : "Get"
                 }) .then(function(response){
-                console.log(response.data[2].title);
-                console.log(response);
-                console.log(queryURL);
-
+                // console.log(response.data[2].title);
+                // console.log(response);
+                // console.log(queryURL);
                 var result=response.data;
                 var animalDiv;
                 var p;
                 var animalImage;
-            $("#imagesList").empty();
-             for (var i = 0; i < result.length; i++) {
+                $("#imagesList").empty();
+                for (var i = 0; i < result.length; i++) {
 
-                animalDiv =$("<div id='theid'></div>");
-                p = $("<p>").text (" Rating : "+result[i].rating);
-                animalImage= $("<img>");
-                animalImage.addClass("gif");
-                animalImage.attr("src", result[i].images.fixed_height_still.url);
-                animalDiv.append(p,animalImage);
-                $("#imagesList").prepend(animalDiv);
-            }
-             $(".gif").on("click", function(event){
-              event.preventDefault();
-
-            //"url": "https://media1.giphy.com/media/rdma0nDFZMR32/200_s.gif"
-            //"url": "https://media1.giphy.com/media/rdma0nDFZMR32/200.gif",
-             var src=  $(this).attr("src");
-                if($(this).hasClass('animate')){
-                    //stop
-                    $(this).attr('src', src.replace(/\.gif/i, "_s.gif"))
-                    $(this).removeClass('animate');
-                } else {
-                    //play
-                    $(this).addClass('animate');
-                    $(this).attr('src', src.replace(/\_s.gif/i, ".gif"))
+                    animalDiv =$("<div id='theid'></div>");
+                    p = $("<p>").text (" Rating : "+result[i].rating);
+                    animalImage= $("<img>");
+                    animalImage.addClass("gif");
+                    animalImage.attr("src", result[i].images.fixed_height_still.url);
+                    animalDiv.append(p,animalImage);
+                    $("#imagesList").prepend(animalDiv);
                 }
+                    $(".gif").on("click", function(event){
+                event.preventDefault();
+
+                //"url": "https://media1.giphy.com/media/rdma0nDFZMR32/200_s.gif"
+                //"url": "https://media1.giphy.com/media/rdma0nDFZMR32/200.gif",
+                var src=  $(this).attr("src");
+                    if($(this).hasClass('animate')){
+                        //stop
+                        $(this).attr('src', src.replace(/\.gif/i, "_s.gif"))
+                        $(this).removeClass('animate');
+                    } else {
+                        //play
+                        $(this).addClass('animate');
+                        $(this).attr('src', src.replace(/\_s.gif/i, ".gif"))
+                    }
         
             });
         
@@ -136,15 +144,18 @@
             $("#buttons-view").append(a);
             //console.log(animals);
             }
-            }
-            $("#add-animal").on("click", function(event){
-                event.preventDefault();
-                var animal=$("#animal-input").val().trim();
-                animals.push(animal);
-                renderButtons();
-                diaplayAnimalInfo(animal);
+        }
+        $("#add-animal").on("click", function(){
+            event.preventDefault();
+            console.log("Testing the button");
+            var animal=$("#animal-input").val().trim();
+            diaplayAnimalInfo(animal);
+            renderButtons();
+            animals.push(animal);
+            $("#animal-input").val("");
 
         })
+
 
 
         $(document).on("click",".animal",".gif",diaplayAnimalInfo);
