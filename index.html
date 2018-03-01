@@ -26,144 +26,133 @@
         #theid{
             float: left;
             margin-left: 20px;
+            margin-bottom: 15px;
         }
     
     </style>
 </head>
 <body>
     <div class=".container-fluid">
-        <div class="well">
+    <div class="well">
 
        
         <h1>Animal Search</h1>
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-         <!-- Rendered Buttons will get Dumped Here  -->
-         <div id="buttons-view"></div>  
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-lg-8 col-md-9 ">
-            <div id="imagesList">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+            <!-- Rendered Buttons will get Dumped Here  -->
+            <div id="buttons-view"></div>  
             </div>
         </div>
-        <div class="col-lg-4 col-md-3 ">
-        <form id="animal-form">
-            <label for="animal-input"><h2>Enter animal name</h2></label>
-            <input type="text" id="animal-input"><br>
-        
-            <!-- Button triggers new movie to be added -->
-            <input id="add-animal" type="submit" value="Add an animal">
-    
-        </form>
+        <div class="row">
+            <div class="col-lg-8 col-md-9 ">
+                <div id="imagesList">
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 ">
+                <form id="animal-form">
+                    <label for="animal-input"><h2>Enter animal name</h2></label>
+                    <input type="text" id="animal-input"><br>
+                
+                    <!-- Button triggers new movie to be added -->
+                    <input id="add-animal" type="submit" value="Add an animal">
+            
+                </form>
+             </div>
         </div>
     </div>
-</div>
 
-</div>
+    </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
 
-// crating an animal array
-var animals=["Dog","Cat", "Lion", "Bear", "Pig", "Bird", "Tiger", "Zebra", "Horse", "Wolf", "Goat","Cow"];
-//this to diaplay the animals
-function diaplayAnimalInfo(animal){
+        // crating an animal array
+        var animals=["Dog","Cat", "Lion", "Bear", "Pig", "Bird", "Tiger", "Zebra", "Horse", "Wolf", "Goat","Cow"];
+        //this to diaplay the animals
+        function diaplayAnimalInfo(animal){
 
-var animal=$(this).attr("data-name");
-var queryURL = "https://api.giphy.com/v1/gifs/search?q="+animal+"&api_key=vS4iy2CqouA1doiEk64fUA4jLRuZmDgG&limit=10";
+            var animal=$(this).attr("data-name");
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q="+animal+"&api_key=vS4iy2CqouA1doiEk64fUA4jLRuZmDgG&limit=10";
 
-$.ajax({
-    url : queryURL,
-    method : "Get"
-}) .then(function(response){
-    console.log(response.data[2].title);
-    console.log(response);
-    console.log(queryURL);
-//    var newDiv=$("<div>"+data.data[0].slug+"</div>");
-//    var newimg=$("<img  src='"+data.data[0]+" '/>" );
-//    $("#dump").append(newDiv);
-//    $("#dump").append(newimg);
+            $.ajax({
+                url : queryURL,
+                method : "Get"
+                }) .then(function(response){
+                console.log(response.data[2].title);
+                console.log(response);
+                console.log(queryURL);
 
-var result=response.data;
-var animalDiv;
-var p;
-var animalImage;
-$("#imagesList").empty();
-for (var i = 0; i < result.length; i++) {
+                var result=response.data;
+                var animalDiv;
+                var p;
+                var animalImage;
+            $("#imagesList").empty();
+             for (var i = 0; i < result.length; i++) {
 
-     animalDiv =$("<div id='theid'></div>");
-     p = $("<p>").text (" Rating : "+result[i].rating);
-     animalImage= $("<img>");
-     animalImage.addClass("gif");
-    animalImage.attr("src", result[i].images.fixed_height_still.url);
-    animalDiv.append(p,animalImage);
-    $("#imagesList").prepend(animalDiv);
- }
- $(".gif").on("click", function(event){
-     event.preventDefault();
+                animalDiv =$("<div id='theid'></div>");
+                p = $("<p>").text (" Rating : "+result[i].rating);
+                animalImage= $("<img>");
+                animalImage.addClass("gif");
+                animalImage.attr("src", result[i].images.fixed_height_still.url);
+                animalDiv.append(p,animalImage);
+                $("#imagesList").prepend(animalDiv);
+            }
+             $(".gif").on("click", function(event){
+              event.preventDefault();
 
-//"url": "https://media1.giphy.com/media/rdma0nDFZMR32/200_s.gif"
-//"url": "https://media1.giphy.com/media/rdma0nDFZMR32/200.gif",
-    var src=  $(this).attr("src");
-    if($(this).hasClass('animate')){
-         //stop
-         $(this).attr('src', src.replace(/\.gif/i, "_s.gif"))
-         $(this).removeClass('animate');
-      } else {
-        //play
-        $(this).addClass('animate');
-        $(this).attr('src', src.replace(/\_s.gif/i, ".gif"))
-      }
-    // var state = $(this).attr("data-state");
-    // if (state === "still"){
-    //     $(this).attr("src",$(this).attr("fixed_width.url"));
-    //     $(this).attr("data-state","animate");
-    // }else{
-    //     $(this).attr("src", $(this).attr("fixed_width_still.url"));
-    //     $(this).attr("data-state","still");
-    // }
-});
- 
+            //"url": "https://media1.giphy.com/media/rdma0nDFZMR32/200_s.gif"
+            //"url": "https://media1.giphy.com/media/rdma0nDFZMR32/200.gif",
+             var src=  $(this).attr("src");
+                if($(this).hasClass('animate')){
+                    //stop
+                    $(this).attr('src', src.replace(/\.gif/i, "_s.gif"))
+                    $(this).removeClass('animate');
+                } else {
+                    //play
+                    $(this).addClass('animate');
+                    $(this).attr('src', src.replace(/\_s.gif/i, ".gif"))
+                }
+        
+            });
+        
 
-});
+        });
 
-}
+        }
 
-// Function for displaying movie data
-function renderButtons() {
+        // Function for displaying movie data
+        function renderButtons() {
 
-$("#buttons-view").empty();
+            $("#buttons-view").empty();
 
-// Loops through the array of movies
-for (var i = 0; i < animals.length; i++) {
+            // Loops through the array of movies
+            for (var i = 0; i < animals.length; i++) {
 
-  var a = $("<button>");
-  a.addClass("animal btn btn-success");
-  a.attr("data-name", animals[i]);
+            var a = $("<button>");
+            a.addClass("animal btn btn-success");
+            a.attr("data-name", animals[i]);
 
-  a.text(animals[i]);
-  $("#buttons-view").append(a);
-  //console.log(animals);
-}
-}
-$("#add-animal").on("click", function(event){
-    event.preventDefault();
-    var animal=$("#animal-input").val().trim();
-    animals.push(animal);
-    renderButtons();
-    diaplayAnimalInfo(animal);
+            a.text(animals[i]);
+            $("#buttons-view").append(a);
+            //console.log(animals);
+            }
+            }
+            $("#add-animal").on("click", function(event){
+                event.preventDefault();
+                var animal=$("#animal-input").val().trim();
+                animals.push(animal);
+                renderButtons();
+                diaplayAnimalInfo(animal);
 
-})
+        })
 
 
- $(document).on("click",".animal",".gif",diaplayAnimalInfo);
+        $(document).on("click",".animal",".gif",diaplayAnimalInfo);
 
-renderButtons();
+        renderButtons();
 
 
-</script>
+    </script>
 
 </body>
 </html>
